@@ -14,9 +14,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // 1. A hardcoded secret key (Must be at least 32 characters long!)
-    // If you restart the server, this keeps your tokens working.
-    private static final String SECRET_STRING = "MySuperSecretKeyForMyBankingAppPortfolio2025!";
+    //Note that in production this is injected from env or properties file
+    private static final String SECRET_STRING = "9a4f2c8d3b7e1g5h9j2k4m6n8p0q2r4t6u8v0x2y4z6a8c0e";
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET_STRING.getBytes());
 
     // --- GENERATE TOKEN ---
