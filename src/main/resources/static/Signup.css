@@ -1,0 +1,446 @@
+/*! HTML5 Boilerplate v9.0.1 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+:root {
+    --bg-dark: #060415;
+    --bg-card: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-primary: #3bbdf8;
+    --accent-danger: #ef4444;
+    --accent-success: #22c55e;
+    --border-color: #334155;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    color: black;
+    text-decoration: none;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(6, 4, 21);
+
+}
+
+
+/* navbar*/
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-card);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3bbdf8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    color: white;
+    font-size: 0.8em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.alert-badge {
+    background: var(--accent-danger);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 0.7em;
+    vertical-align: middle;
+}
+
+.signout-btn {
+    background-color: var(--accent-danger);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.signout-btn:hover {
+    opacity: 0.9;
+}
+
+.dropdown{
+    position: relative;
+    display: block;
+    margin-right: 60px;
+    color: white;
+    transition: 0.3s ease;
+}
+
+
+
+
+
+#dropbutton {
+    display: flex;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color:var(--bg-dark) ;
+    border: none;
+
+}
+
+#dropbutton:hover{
+    cursor: pointer;
+    opacity: 0.8;
+
+}
+
+#buttonContainer{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    gap: 10px;
+
+}
+#NavUserName{
+    color: white;
+}
+
+.dropdown-content{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    left:-45px;
+    top: 50px;
+    position: absolute;
+    height: 150px;
+    width: 200px;
+    border-radius: 10px;
+
+
+}
+
+
+.dropdown-content a{
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+
+}
+
+
+.dropdown-content button,
+.dropdown-content .dropdown-item {
+    width: 100%;
+    border: none;
+    height: 50px;
+    background-color: #343d57;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Added this to space out the icon and text */
+    text-decoration: none; /* Removes underline from the link */
+    font-family: 'Inter', sans-serif; /* Ensures font matches */
+
+}
+ion-icon{
+    color: white;
+}
+
+.dropdown-content button:hover,
+.dropdown-content .dropdown-item:hover {
+    cursor: pointer;
+    background-color: #293149
+}
+
+
+.dropdown-content #linkp {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+
+
+
+
+
+section {
+
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    max-width: none;
+
+
+    opacity: 1;
+}
+
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(30px);
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 20px #88e3fb;
+    transition: all 0.5s ease-in-out;
+    margin-bottom: 50px;
+}
+
+h1{
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+}
+
+
+
+#line{
+    margin-top: 20px;
+    height: 2px;
+    width: 350px;
+    background-color: #4e4e4e;
+}
+
+.inputbox{
+
+    position: relative;
+    margin: 20px 0;
+    max-width: 550px;
+    border-bottom: 2px solid #fff;
+    transition: all 0.5s ease-in-out;
+}
+
+.inputbox input{
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 0 35px 0 5px;
+    color: #fff;
+}
+
+.inputbox ion-icon{
+    position: absolute;
+    right: 8px;
+    color: #fff;
+    font-size: 1.2rem;
+    top:12px;
+    transition: all 0.5s ease-in-out;
+}
+
+.inputbox label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #fff;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.5s ease-in-out;
+
+}
+
+input:focus ~ label,
+input:valid ~ label{
+    top: -5px;
+    font-size: 0.9rem;
+    color: #a8a8a8;
+}
+
+section button,
+section a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: rgb(0, 191, 255);
+    border: none;
+    outline: none;
+
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+section button:hover,
+section a:hover{
+    background: rgb(0, 166, 227);
+}
+
+.register{
+    font-size: 0.9rem;
+    color: #5c5c5c;
+    text-align: center;
+    margin: 25px 0 10px;
+    transition: all 0.5s ease-in-out;
+
+}
+.register p{
+    color: #919191;
+}
+
+
+.register p a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.5s ease-in-out;
+}
+
+.register p a:hover{
+    text-decoration: underline;
+    color: #a8a8a8;
+}
+.register button{
+    margin-top: 10px;
+}
+
+#error{
+    color: #ff2323;
+    font-weight: bold;
+}
+
+#signupError{
+    color: #ff2323;
+    font-weight: bold;
+}
+

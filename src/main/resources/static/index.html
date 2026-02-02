@@ -1,0 +1,64 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian // Home</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Fraud<span>Guardian</span></div>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="transactions.html" class="nav-link">Transactions</a>
+        <a href="alerts.html" class="nav-link">Alerts <span class="alert-badge" id="home-alerts"></span></a>
+    </div>
+
+    <div class = "dropdown" id="dropdown">
+        <button id ="dropbutton">
+            <div id="buttonContainer">
+
+            </div>
+        </button>
+        <div class="dropdown-content" id="dcontent">
+            <a href="Profile.html" id="linkp" class="dropdown-item">
+                <ion-icon name="person-add-outline"></ion-icon>
+                Edit Profile
+            </a>
+            <button><ion-icon name="cog-outline"></ion-icon>Settings</button>
+            <button onclick="logout()" class="signout-btn" id="signout"><ion-icon name="log-in-outline"></ion-icon>Sign Out</button>
+
+        </div>
+    </div>
+
+</nav>
+<div id="auth-error">
+    <h2>Access Denied</h2>
+    <p>You need to log in to use this feature.</p>
+    <a href="login.html" class="nav-link" style="color: blue; text-decoration: underline;">Go to Login</a>
+</div>
+<div id="main-content">
+    <div class="container">
+        <h2>System Overview</h2>
+
+        <div class="dashboard-grid" id ="main-dashboard">
+            <div class="card">
+                <span class="text-muted">Total Processed Volume</span>
+                <span class="stat-number text-success" id="total"></span>
+            </div>
+            <div class="card">
+                <span class="text-muted">Active Threats</span>
+                <span class="stat-number text-danger" id ="threats"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="transactions.js" defer></script>
+</body>
+</html>

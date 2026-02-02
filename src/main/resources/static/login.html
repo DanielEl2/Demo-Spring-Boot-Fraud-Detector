@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="Signup.css">
+
+</head>
+<body>
+<nav>
+    <div class="logo">Fraud<span>Guardian</span></div>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="transactions.html" class="nav-link">Transactions</a>
+        <a href="alerts.html" class="nav-link">Alerts <span class="alert-badge" id="home-alerts"></span></a>
+    </div>
+
+    <div class = "dropdown" id="dropdown">
+        <button id ="dropbutton">
+            <div id="buttonContainer">
+
+            </div>
+        </button>
+        <div class="dropdown-content" id="dcontent">
+            <a href="Profile.html" id="linkp" class="dropdown-item">
+                <ion-icon name="person-add-outline"></ion-icon>
+                Edit Profile
+            </a>
+            <button><ion-icon name="cog-outline"></ion-icon>Settings</button>
+            <button onclick="logout()" class="signout-btn" id="signout"><ion-icon name="log-in-outline"></ion-icon>Sign Out</button>
+
+        </div>
+    </div>
+
+</nav>
+<section>
+    <div class="container">
+        <h1>Log In</h1>
+        <form>
+            <div class="inputbox">
+                <ion-icon name="people-outline"></ion-icon>
+                <input type="text" name="username" id="username">
+                <label>Username</label>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" name="password" id="password">
+                <label>Password</label>
+            </div>
+            <div><p id="error"></p></div>
+            <button type="button" onclick="sendLogin()">Log In</button>
+            <div id="line"></div>
+            <div class="register">
+                <p>Dont have an account?</p>
+                <a href="SignUp.html">Create New Account</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="login.js" defer></script>
+</body>
+</html>
