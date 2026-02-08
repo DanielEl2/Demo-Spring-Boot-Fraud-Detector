@@ -43,6 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(getHomeInfo,2000);
     }
 
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+
+        link.classList.remove('active');
+
+
+        if (link.getAttribute('href') === currentPath.split('/').pop()) {
+            link.classList.add('active');
+        }
+    });
+
 });
 
 const profileButton = document.getElementById('dropbutton')
@@ -79,12 +92,21 @@ async function getTransactions(userId,role) {
             });
         }
 
+        // check if our interceptor blocked request due to expired token
+        if (response.status === 401) {
+            console.warn("Token expired or invalid. Logging out...");
+            logout();
+            return;
+        }
+
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+
         const data = await response.json();
 
         data.reverse();
 
         const tableBody = document.getElementById('table-body');
-        // Safety check: if user switched pages quickly
+
         if (!tableBody) return;
 
         let dataHtml = '';
@@ -118,7 +140,7 @@ async function getTransactions(userId,role) {
         tableBody.innerHTML = dataHtml;
 
         // Update badge (Only if badge exists on this page)
-        const alertsBadge = document.getElementById('alerts');
+        const alertsBadge = document.getElementById('home-alerts');
         if (alertsBadge) alertsBadge.textContent = `${fraudCounter}`;
 
     } catch (error) {
@@ -183,7 +205,7 @@ async function getAlerts(userId,role) {
 
         tableBody.innerHTML = dataHtml;
 
-        const alertsBadge = document.getElementById('alertt');
+        const alertsBadge = document.getElementById('home-alerts');
         if (alertsBadge) alertsBadge.textContent = `${alertCounter}`;
 
     } catch (error) {

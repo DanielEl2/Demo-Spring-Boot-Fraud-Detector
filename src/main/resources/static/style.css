@@ -355,6 +355,15 @@ th {
     font-size: 0.85rem;
     letter-spacing: 1px;
 }
+#alert-table-container th:last-child{
+    padding-left: 110px;
+}
+
+#alert-table-container td:last-child{
+    padding-left: 90px;
+}
+
+
 
 tr:hover {
     background-color: rgba(255,255,255,0.02);
@@ -396,6 +405,7 @@ tr:hover {
     text-decoration: none;
     display: inline-block;
     font-size: 0.9rem;
+    width: 100px;
 }
 
 .resolve-btn:hover {
@@ -413,6 +423,7 @@ tr:hover {
     text-decoration: none;
     display: inline-block;
     font-size: 0.9rem;
+    width: 100px;
 }
 
 .reject-btn:hover {

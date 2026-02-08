@@ -1,22 +1,30 @@
 package com.project.bankwebapp.Services;
+
 import com.project.bankwebapp.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Service
 public class JwtService {
 
-    //Note that in production this is injected from env or properties file
-    private static final String SECRET_STRING = "9a4f2c8d3b7e1g5h9j2k4m6n8p0q2r4t6u8v0x2y4z6a8c0e";
-    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET_STRING.getBytes());
+    @Value("${app.jwt.secret}")
+    private String secretString;
+
+    private Key secretKey;
+
+    @PostConstruct // thiss runs after object creation and all dependecies have been already injected
+    protected void init() {
+        this.secretKey = Keys.hmacShaKeyFor(secretString.getBytes());
+    }
 
     // --- GENERATE TOKEN ---
     public String generateToken(String username, Role role, UUID userId) {
@@ -29,7 +37,7 @@ public class JwtService {
                 .claim("role", role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 Hours
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -40,10 +48,10 @@ public class JwtService {
                     //we verify the signature with our secret key
                     // if it fails then it will throw an exception
                     // we build the parser and claim the token
-                    .setSigningKey(SECRET_KEY)
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
-            return true; // Token is good!
+            return true; // Token is good
         } catch (Exception e) {
             return false; // Token is expired or fake
         }
@@ -52,7 +60,7 @@ public class JwtService {
 
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

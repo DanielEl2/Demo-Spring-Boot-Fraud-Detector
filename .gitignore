@@ -5,7 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
+
 .apt_generated
 .classpath
 .factorypath
@@ -17,7 +17,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
+
 .idea
 *.iws
 *.iml
@@ -26,17 +26,17 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### NetBeans ###
+
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+
 .vscode/
 
-### OS System Files ###
+
 .DS_Store
 .DS_Store?
 ._*
@@ -45,15 +45,19 @@ out/
 ehthumbs.db
 Thumbs.db
 
-### Logs & Debugging ###
+
 *.log
 logs/
 !**/src/main/**/logs/
 !**/src/test/**/logs/
 
-### Security & Environment Variables (CRITICAL) ###
+
 .env
 .env.local
 .env.*
 application-local.properties
 
+.venv/
+venv/
+__pycache__/
+*.pyc
