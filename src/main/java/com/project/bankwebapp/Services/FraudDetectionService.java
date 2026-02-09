@@ -33,7 +33,7 @@ public class FraudDetectionService {
     public void scanTransaction(TransactionEntity transaction) {
 
         List<String> fraudReasons = new ArrayList<>();
-        // 2. CHECK THE RULE
+
         if (transaction.getAmount().compareTo(MAX_AMOUNT) > 0) {
             System.out.println("FRAUD: Amount " + transaction.getAmount() + " > " + MAX_AMOUNT);
 

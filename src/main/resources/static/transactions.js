@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('main-content');
     const authError = document.getElementById('auth-error');
 
-    // 1. Check if the user is logged in
+
     if (!token || !userId) {
         if (mainContent) mainContent.style.display = 'none';
         if (authError) authError.style.display = 'block';
-        return; // Stop execution here
+        return;
     }
     if (document.getElementById('table-body')) {
         getTransactions(userId,role); // Run immediately once
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Only run getAlerts if the alert table exists
     if (document.getElementById('alert-table')) {
-        getAlerts(userId,role); // Run immediately once
+        getAlerts(userId,role);// Run immediately once
         setInterval(()=>getAlerts(userId,role), 2000); // Then repeat
     }
 
@@ -139,7 +139,7 @@ async function getTransactions(userId,role) {
         // Update table
         tableBody.innerHTML = dataHtml;
 
-        // Update badge (Only if badge exists on this page)
+
         const alertsBadge = document.getElementById('home-alerts');
         if (alertsBadge) alertsBadge.textContent = `${fraudCounter}`;
 
@@ -164,10 +164,12 @@ async function getAlerts(userId,role) {
                 headers: {'Content-Type': 'application/json','Authorization':`Bearer ${localStorage.getItem('token')}`}
             });
         }
-        if(!response.ok){
-            console.error(`Error: Server returned ${response.status}`);
+        if (response.status === 401) {
+            console.warn("Token expired. Logging out...");
+            logout();
             return;
-         }
+        }
+        if (!response.ok) throw new Error("HTTP error " + response.status);
 
         const data = await response.json();
 
@@ -262,6 +264,12 @@ async function getHomeInfo() {
                 headers: {'Content-Type': 'application/json','Authorization':`Bearer ${localStorage.getItem('token')}`}
             });
         }
+        if (response.status === 401) {
+            console.warn("Token expired. Logging out...");
+            logout();
+            return;
+        }
+        if (!response.ok) throw new Error("HTTP error " + response.status);
 
         const data = await response.json();
         let total = 0;
@@ -324,6 +332,13 @@ async function updateUser() {
             headers: {'content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}`},
             body: JSON.stringify(userdata)
         })
+
+        if (response.status === 401) {
+            console.warn("Token expired. Logging out...");
+            logout();
+            return;
+        }
+        if (!response.ok) throw new Error("HTTP error " + response.status);
 
 
         if (response.ok) {

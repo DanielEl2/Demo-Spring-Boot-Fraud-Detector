@@ -262,9 +262,9 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Added this to space out the icon and text */
-    text-decoration: none; /* Removes underline from the link */
-    font-family: 'Inter', sans-serif; /* Ensures font matches */
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
 
 }
 ion-icon{
