@@ -19,18 +19,22 @@ public class FraudDetectionService {
     private final FraudAlertService fraudAlertService;
     private final FraudAlertRepository fraudAlertRepository;
     private final TransactionRepository transactionRepository;
+    private final LocationService locationService;
     private static final BigDecimal MAX_AMOUNT = new BigDecimal("5000");
-    private static final int MAX_TRANSACTIONS_WINDOW = 5;
+    private static final int MAX_TRANSACTIONS_WINDOW = 30;
     private static final int TIME_WINDOW_MINUTES = 10;
+    private static final int TRAVEL_SPEED = 800;
 
 
-    public FraudDetectionService(FraudAlertService fraudAlertService, FraudAlertRepository fraudAlertRepository, TransactionRepository transactionRepository) {
+    public FraudDetectionService(FraudAlertService fraudAlertService, FraudAlertRepository fraudAlertRepository,
+                                 TransactionRepository transactionRepository, LocationService locationService) {
         this.fraudAlertService = fraudAlertService;
         this.fraudAlertRepository = fraudAlertRepository;
         this.transactionRepository = transactionRepository;
+        this.locationService = locationService;
     }
 
-    public void scanTransaction(TransactionEntity transaction) {
+    public List<String> scanTransaction(TransactionEntity transaction) {
 
         List<String> fraudReasons = new ArrayList<>();
 
@@ -47,22 +51,26 @@ public class FraudDetectionService {
         long recentCount = transactionRepository.countByUserAndTimestampAfter(transaction.getUser(), timeWindowStart);
 
         // recentCount includes the current one if it was already saved
-        if (recentCount > MAX_TRANSACTIONS_WINDOW) {
+        if (recentCount >= MAX_TRANSACTIONS_WINDOW) {
             System.out.println("FRAUD: Velocity Check Failed. " + recentCount + " transactions in " + TIME_WINDOW_MINUTES + " mins");
 
             fraudReasons.add("High Velocity: Multiple transactions in short period of time");
         }
-        // here we only save if there is a fraud alert
-        if (!fraudReasons.isEmpty()) {
-
-            String combinedDescription = String.join(", ", fraudReasons);
-
-
-            createAlert(transaction, combinedDescription);
+        TransactionEntity mostRecent = transactionRepository.findLastTransactionForUser(transaction.getUser().getUser_id());
+        if(mostRecent!=null){
+            long seconddiff = ChronoUnit.SECONDS.between(mostRecent.getTimestamp(), transaction.getTimestamp());
+            double hourdiff = Math.abs(seconddiff/3600.0);
+            double realdistance = locationService.getDistance(mostRecent.getLocation(),transaction.getLocation());
+            if(realdistance>TRAVEL_SPEED*hourdiff){
+                fraudReasons.add("Impossible Travel: Transaction has occured too far away from previous one");
+            }
         }
+
+
+        return fraudReasons;
     }
 
-    private void createAlert(TransactionEntity transaction, String description) {
+    public void createAlert(TransactionEntity transaction, String description) {
         // we create a new alert and set its properties then link it to the transaction
         FraudAlertEntity fraudAlertEntity = new FraudAlertEntity();
         fraudAlertEntity.setStatus(AlertStatus.OPEN);

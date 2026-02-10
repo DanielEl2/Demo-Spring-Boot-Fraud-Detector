@@ -34,9 +34,17 @@ public class TransactionService {
     public TransactionEntity createTransaction(TransactionEntity transactionEntity, UUID userid) {
         UserEntity userEntity = userRepository.findById(userid).orElseThrow(() -> new RuntimeException("User not found"));
         transactionEntity.setUser(userEntity);
+        List<String> fraudReasons = fraudDetectionService.scanTransaction(transactionEntity);
         TransactionEntity savedTransaction =  transactionRepository.save(transactionEntity);
 
-        fraudDetectionService.scanTransaction(savedTransaction);
+        if(!fraudReasons.isEmpty()){
+            String combinedDescription = String.join(", ", fraudReasons);
+
+
+            fraudDetectionService.createAlert(savedTransaction, combinedDescription);
+        }
+
+
 
         return savedTransaction;
 

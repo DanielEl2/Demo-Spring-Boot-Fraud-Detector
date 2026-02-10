@@ -31,7 +31,11 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
 
     long countByUserAndTimestampAfter(UserEntity user, Instant timestamp);
 
-    //@Modifying(clearAutomatically = true) // ensures its not pulling from cache
+    //here we use an aggregate function to ge the most recent
+    @Query("SELECT t FROM TransactionEntity t WHERE t.user.user_id = :userId AND t.fraudAlert IS NULL ORDER BY t.timestamp DESC LIMIT 1")
+    TransactionEntity findLastTransactionForUser(@Param("userId") UUID userId);
+
+    //@Modifying(clearAutomatically = true)
     //@Query("UPDATE TransactionEntity t set t.status ='status-clean' where t.transaction_id= :transactionId")
     //int statusResolved(@Param("transactionId") Long transactionId);
 }
